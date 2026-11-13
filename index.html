@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#ead9b4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="UNSAID">
+  <meta name="description" content="UNSAID — a puzzle of words left behind.">
+  <title>UNSAID</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icons/icon-32.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div id="app">
+    <canvas id="paper"></canvas>
+    <div id="chrome">
+      <button id="muteFab" type="button" aria-label="Mute">SOUND</button>
+
+      <section id="titleScreen" class="screen" data-screen="title">
+        <div class="col-center">
+          <div class="ornament"><i></i><span>✦</span><i></i></div>
+          <h1 id="titleWord" class="title-word">UNSAID</h1>
+          <div class="ornament"><i></i><span>✦</span><i></i></div>
+          <p class="subtitle">a puzzle of words left behind</p>
+          <button type="button" id="btnContinue">Continue</button>
+          <button type="button" id="btnBegin">Begin</button>
+          <button type="button" id="btnMap">The Page</button>
+        </div>
+        <p class="footer-mark">unsaid • a puzzle of words left behind</p>
+      </section>
+
+      <section id="letterScreen" class="screen" data-screen="letter">
+        <div class="col-center">
+          <div class="ornament"><i></i><span>✦</span><i></i></div>
+          <p class="kicker" id="letterKicker">Part 1</p>
+          <h2 id="letterLine" style="letter-spacing:0.08em;font-size:22px;max-width:16em;line-height:1.35;padding-left:0;">The room is made of words.</h2>
+          <p id="letterQ">Walk first. When you must speak, speak carefully.</p>
+          <div class="ornament"><i></i><span>✦</span><i></i></div>
+          <button type="button" id="btnTurnPage">Turn the page</button>
+        </div>
+      </section>
+
+      <div id="playHud">
+        <div id="playBar">
+          <span><span class="part" id="hudPart">Part 1</span> · <span class="name" id="hudName">Threshold</span></span>
+          <span class="breaths" id="hudBreaths">breaths 0</span>
+        </div>
+        <div id="playTitle"></div>
+      </div>
+      <div id="boardHit"></div>
+      <div id="coach"><div class="card"><div id="coachText"></div><button type="button" id="btnCoachOk">I see</button></div></div>
+      <div id="playDock">
+        <div id="vocabRow"></div>
+        <div id="confirmRow">
+          <span class="ask" id="confirmAsk">Speak this word?</span>
+          <button type="button" id="btnSpeak">Speak</button>
+          <button type="button" id="btnCancelSay">Keep</button>
+        </div>
+        <div id="dpad"><div class="pad">
+          <button type="button" class="u" data-dir="U">↑</button>
+          <button type="button" class="l" data-dir="L">←</button>
+          <button type="button" class="r" data-dir="R">→</button>
+          <button type="button" class="d" data-dir="D">↓</button>
+        </div></div>
+        <div id="toolsRow">
+          <button type="button" id="btnHint">Hint</button>
+          <button type="button" id="btnUndo">Undo</button>
+          <button type="button" id="btnReset">Reset</button>
+          <button type="button" id="btnPause">Page</button>
+        </div>
+      </div>
+      <div id="toast"></div>
+
+      <section id="hintOverlay" class="overlay" data-screen="hint">
+        <div class="ornament"><i></i><span>✦</span><i></i></div>
+        <p class="kicker" id="hintKicker">A hint</p>
+        <p id="hintBody"></p>
+        <div class="actions">
+          <button type="button" id="btnHintMore">A stronger hint</button>
+          <button type="button" id="btnHintDemo">Show me</button>
+          <button type="button" id="btnHintClose">I will try</button>
+        </div>
+      </section>
+
+      <section id="winOverlay" class="overlay" data-screen="win">
+        <div class="ornament"><i></i><span>✦</span><i></i></div>
+        <h2>SAID</h2>
+        <div class="stars" id="winStars">★★★</div>
+        <p id="winLine">A door, left open.</p>
+        <div class="actions">
+          <button type="button" id="btnNext">Continue</button>
+          <button type="button" id="btnWinMap">The Page</button>
+        </div>
+      </section>
+
+      <section id="pauseOverlay" class="overlay" data-screen="pause">
+        <div class="ornament"><i></i><span>✦</span><i></i></div>
+        <h2 id="pauseTitle">UNSAID</h2>
+        <p id="pauseLine">The page is still open.</p>
+        <div class="actions">
+          <button type="button" id="btnResume">Resume</button>
+          <button type="button" id="btnPauseMap">The Page</button>
+          <button type="button" id="btnPauseMute">Sound: on</button>
+          <button type="button" id="btnToggleDpad">D-pad: off</button>
+          <button type="button" id="btnTitle">Title</button>
+        </div>
+      </section>
+
+      <section id="mapScreen" class="screen" data-screen="map">
+        <div class="ornament"><i></i><span>✦</span><i></i></div>
+        <h2 class="title-word" style="font-size:28px;">THE PAGE</h2>
+        <div class="ornament"><i></i><span>✦</span><i></i></div>
+        <div id="mapList"></div>
+        <div class="col-center" style="flex:0;margin-top:12px;">
+          <button type="button" id="btnMapBack">Back</button>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script src="./js/core.js"></script>
+  <script src="./js/levels.js"></script>
+  <script src="./js/hints.js"></script>
+  <script src="./js/audio.js"></script>
+  <script src="./js/render.js"></script>
+  <script src="./js/game.js"></script>
+</body>
+</html>
